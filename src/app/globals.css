@@ -1,0 +1,261 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.quiz-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timer {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.registration-card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.registration-card input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.user-button {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.question-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: white;
+}
+
+.question-text {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.blank-input {
+  width: 100px;
+  padding: 4px 8px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.matching-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.matching-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.matching-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matching-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.draggable {
+  cursor: move;
+}
+
+.droppable {
+  background: #f5f5f5;
+}
+
+.matched {
+  background: #e3f2fd;
+}
+
+.matches-list {
+  margin-top: 20px;
+}
+
+.match-pair {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.arrow {
+  color: #666;
+}
+
+.remove-match {
+  padding: 4px 8px;
+  border: none;
+  background: #ff5252;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.nav-button, .submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-button {
+  background: #2196f3;
+  color: white;
+}
+
+.nav-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button {
+  background: #4caf50;
+  color: white;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #2196f3;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.difficulty-selection {
+  max-width: 400px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.difficulty-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.difficulty-buttons button:nth-child(1) {
+  background: #4caf50;  /* Green for easy */
+}
+
+.difficulty-buttons button:nth-child(2) {
+  background: #2196f3;  /* Blue for medium */
+}
+
+.difficulty-buttons button:nth-child(3) {
+  background: #f44336;  /* Red for hard */
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+}
+
+.error {
+  color: #f44336;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+}

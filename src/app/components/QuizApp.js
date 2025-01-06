@@ -1,0 +1,51 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import UserSelection from './UserSelection'
+import QuizSelection from './QuizSelection'
+import Quiz from './Quiz'
+
+export default function QuizApp() {
+  const [users, setUsers] = useState([])
+  const [currentUser, setCurrentUser] = useState(null)
+  const [quizType, setQuizType] = useState(null)
+
+  useEffect(() => {
+    const storedUsers = localStorage.getItem('quizUsers')
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers))
+    }
+  }, [])
+
+  const addUser = (name) => {
+    const newUser = { id: Date.now().toString(), name }
+    const updatedUsers = [...users, newUser]
+    setUsers(updatedUsers)
+    localStorage.setItem('quizUsers', JSON.stringify(updatedUsers))
+    setCurrentUser(newUser)
+  }
+
+  const selectUser = (user) => {
+    setCurrentUser(user)
+  }
+
+  const selectQuizType = (type) => {
+    setQuizType(type)
+  }
+
+  const resetQuiz = () => {
+    setCurrentUser(null)
+    setQuizType(null)
+  }
+
+  if (!currentUser) {
+    return <UserSelection users={users} addUser={addUser} selectUser={selectUser} />
+  }
+
+  if (!quizType) {
+    return <QuizSelection selectQuizType={selectQuizType} />
+  }
+
+  return <Quiz quizType={quizType} user={currentUser} resetQuiz={resetQuiz} />
+}
+

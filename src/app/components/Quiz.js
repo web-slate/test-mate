@@ -17,11 +17,13 @@ export default function Quiz({ quizType, user, resetQuiz }) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/questions?type=${quizType}`);
+        const response = await fetch(`test-mate/data/${quizType}.json`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const responseJson = await response.json();
+        const data = responseJson.questions;
+
         if (Array.isArray(data) && data.length > 0) {
           const shuffledQuestions = shuffleArray(data).slice(0, 15);
           setQuestions(shuffledQuestions);

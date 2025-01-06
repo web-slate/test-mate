@@ -75,7 +75,7 @@ export default function UserSelection({ selectUser }) {
         </button>
       </form>
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      <h2 className="text-2xl font-bold mb-4">Test Results</h2>
+      <h2 className="text-2xl font-bold mb-4">{users.length === 0 ? 'No' : ''} Test Results</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
         {users.map((user) => (
           <div key={user.user + user.date} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">

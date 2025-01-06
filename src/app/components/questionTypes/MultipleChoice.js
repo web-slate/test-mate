@@ -1,3 +1,5 @@
+"use client"
+
 export default function MultipleChoice({ question, onAnswer, userAnswer }) {
   const handleChange = (option) => {
     if (question.multipleAnswers) {

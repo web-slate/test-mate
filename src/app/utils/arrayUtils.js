@@ -1,3 +1,5 @@
+"use client"
+
 export function shuffleArray(array) {
     if (!Array.isArray(array)) {
       console.error('Input is not an array:', array)

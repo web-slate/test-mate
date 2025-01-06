@@ -1,3 +1,5 @@
+"use client"
+
 import FillInTheBlanks from './questionTypes/FillInTheBlanks';
 import MultipleChoice from './questionTypes/MultipleChoice';
 import MatchTheFollowing from './questionTypes/MatchTheFollowing';

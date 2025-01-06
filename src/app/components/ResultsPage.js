@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react'
 
 export default function ResultsPage({ questions, userAnswers, score, totalQuestions, resetQuiz }) {

@@ -1,3 +1,5 @@
+"use client"
+
 export default function QuizSelection({ selectQuizType }) {
     return (
       <div>

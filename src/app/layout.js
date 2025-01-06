@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Test Mate",
   description: "Prepare exam by attending test dumps",
+  metadataBase: new URL('https://web-slate.github.io/test-mate'),
 };
 
 export default function RootLayout({ children }) {

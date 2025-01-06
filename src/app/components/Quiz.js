@@ -17,7 +17,7 @@ export default function Quiz({ quizType, user, resetQuiz }) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`test-mate/data/${quizType}.json`);
+        const response = await fetch(`data/${quizType}.json`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

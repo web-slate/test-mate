@@ -23,11 +23,20 @@ export default function Quiz({ quizType, user, resetQuiz }) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/questions?type=${quizType}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        let data = [];
+        switch (quizType) {
+          case "easy":
+            data = require("./data/easy").questions.questions;
+            break;
+          case "medium":
+            data = require("./data/medium").questions.questions;
+            break;
+          case "hard":
+            data = require("./data/hard").questions;
+            break;
+          default:
+            data = [];
         }
-        const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
           const shuffledQuestions = shuffleArray(data).slice(0, 15);

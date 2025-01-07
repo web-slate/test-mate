@@ -32,7 +32,7 @@ export default function Quiz({ quizType, user, resetQuiz }) {
             data = require("./data/medium").questions.questions;
             break;
           case "hard":
-            data = require("./data/hard").questions;
+            data = require("./data/hard").questions.questions;
             break;
           default:
             data = [];

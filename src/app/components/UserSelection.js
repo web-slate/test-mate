@@ -91,7 +91,7 @@ export default function UserSelection({ selectUser }) {
           type="text"
           value={newUserName}
           onChange={(e) => setNewUserName(e.target.value)}
-          placeholder="Enter your name"
+          placeholder="Enter your name + label to remember this test"
           className="flex-1 border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button

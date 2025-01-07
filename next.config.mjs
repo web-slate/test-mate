@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig = {
-    output: 'export',
+    output: isDev ? 'standalone' : 'export',
     // basePath: '/test-mate',
     // assetPrefix: '',
 };

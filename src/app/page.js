@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import QuizApp from './components/QuizApp';
 

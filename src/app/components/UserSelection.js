@@ -5,7 +5,18 @@ import { useState, useEffect } from 'react';
 function formatDate(dateString) {
   const date = new Date(dateString);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
+  
+  // Get local time values
+  const formattedDate = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  
+  // Format time as HH:MM AM/PM in local time
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amPm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // Convert to 12-hour format
+  const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')} ${amPm}`;
+
+  return `${formattedDate} ${formattedTime}`;
 }
 
 export default function UserSelection({ selectUser }) {
@@ -31,7 +42,13 @@ export default function UserSelection({ selectUser }) {
       return;
     }
   
+    // Generate a unique ID for the new user using crypto API
+    const newUserId = crypto.randomUUID();
+
+    localStorage.setItem('quizUserId', newUserId);
+
     const newUser = {
+      id: newUserId,
       user: name,
       type: 'easy',
       score: 0,
@@ -43,6 +60,7 @@ export default function UserSelection({ selectUser }) {
     setUsers(updatedUsers);
     localStorage.setItem('quizResults', JSON.stringify(updatedUsers));
     setError(''); // Clear any previous error
+    selectUser(newUser);
   };  
 
   const handleSubmit = (e) => {
@@ -91,12 +109,6 @@ export default function UserSelection({ selectUser }) {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => selectUser(user)}
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
-              >
-                Select
-              </button>
             </div>
             <div className="p-4 grid grid-cols-3 gap-4 text-center">
               <div>

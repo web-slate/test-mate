@@ -5,6 +5,10 @@ import QuestionComponent from './QuestionComponent';
 import ResultsPage from './ResultsPage';
 import { shuffleArray } from '../utils/arrayUtils';
 
+function getCurrentDate() {
+  return new Date().toISOString();
+}
+
 export default function Quiz({ quizType, user, resetQuiz }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -19,12 +23,11 @@ export default function Quiz({ quizType, user, resetQuiz }) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`data/${quizType}.json`);
+        const response = await fetch(`/api/questions?type=${quizType}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const responseJson = await response.json();
-        const data = responseJson.questions;
+        const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
           const shuffledQuestions = shuffleArray(data).slice(0, 15);
@@ -60,15 +63,15 @@ export default function Quiz({ quizType, user, resetQuiz }) {
 
   const checkAnswer = (question, userAnswer) => {
     if (!userAnswer) return false;
-    
+
     switch (question.type) {
       case 'fill-in-the-blanks':
-        return Array.isArray(userAnswer) && 
-               Array.isArray(question.blanks) &&
-               question.blanks.every((blank, index) => 
-                 userAnswer[index] && blank.includes(userAnswer[index])
-               );
-      
+        return Array.isArray(userAnswer) &&
+          Array.isArray(question.blanks) &&
+          question.blanks.every((blank, index) =>
+            userAnswer[index] && blank.includes(userAnswer[index])
+          );
+
       case 'multiple-choice':
         if (!Array.isArray(userAnswer) || !Array.isArray(question.correctAnswers)) {
           return false;
@@ -76,13 +79,13 @@ export default function Quiz({ quizType, user, resetQuiz }) {
         const sortedUserAnswer = [...userAnswer].sort();
         const sortedCorrectAnswers = [...question.correctAnswers].sort();
         return JSON.stringify(sortedCorrectAnswers) === JSON.stringify(sortedUserAnswer);
-      
+
       case 'matching':
         if (!userAnswer || !question.correctMatches) {
           return false;
         }
         return JSON.stringify(question.correctMatches) === JSON.stringify(userAnswer);
-      
+
       default:
         return false;
     }
@@ -97,17 +100,32 @@ export default function Quiz({ quizType, user, resetQuiz }) {
     });
     setScore(totalScore);
     setQuizFinished(true);
-    
-    // Save quiz result to local storage
-    const quizResult = {
-      user: user.name,
-      type: quizType,
-      score: totalScore,
-      totalQuestions: questions.length,
-      date: new Date().toISOString(),
-    };
-    const storedResults = JSON.parse(localStorage.getItem('quizResults') || '[]');
-    localStorage.setItem('quizResults', JSON.stringify([...storedResults, quizResult]));
+
+    // Get the current user's ID from local storage
+    const currentUserId = localStorage.getItem('quizUserId');
+
+    if (currentUserId) {
+      // Get existing quiz results from local storage
+      const storedResults = JSON.parse(localStorage.getItem('quizResults') || '[]');
+
+      // Find the current user in the quiz results
+      const updatedResults = storedResults.map((result) => {
+        if (result.id === currentUserId) {
+          // Update the user's quiz result
+          return {
+            ...result,
+            type: quizType,
+            score: totalScore,
+            totalQuestions: questions.length,
+            date: getCurrentDate(), // or use the current date/time
+          };
+        }
+        return result;
+      });
+
+      // Save the updated results back to local storage
+      localStorage.setItem('quizResults', JSON.stringify(updatedResults));
+    }
   };
 
   if (isLoading) {

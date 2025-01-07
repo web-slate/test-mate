@@ -18,7 +18,7 @@ export default function QuizApp() {
   }, [])
 
   const addUser = (name) => {
-    const newUser = { id: Date.now().toString(), name }
+    const newUser = { name }
     const updatedUsers = [...users, newUser]
     setUsers(updatedUsers)
     localStorage.setItem('quizUsers', JSON.stringify(updatedUsers))
@@ -30,6 +30,15 @@ export default function QuizApp() {
   }
 
   const selectQuizType = (type) => {
+    setQuizType(type);
+
+    const updatedUser = { ...currentUser, type }
+    const updatedUsers = users.map(user => 
+      user.id === updatedUser.id ? updatedUser : user
+    )
+    setUsers(updatedUsers)
+    localStorage.setItem('quizUsers', JSON.stringify(updatedUsers))
+    setCurrentUser(updatedUser)
     setQuizType(type)
   }
 
